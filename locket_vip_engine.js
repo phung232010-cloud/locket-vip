@@ -1,4 +1,13 @@
 // =========================================================================
+// 🎛️ BẢNG ĐIỀU KHIỂN SỐ LƯỢT PHOTO BOOTH (BẠN TỰ TAY CHỈNH SỬA TẠI ĐÂY)
+// =========================================================================
+// HƯỚNG DẪN DÀNH CHO CHỦ SỞ HỮU (NMT LOCKET GOLD VIP):
+// - Để KHÔNG GIỚI HẠN (chụp bao nhiêu lần tùy thích): đặt PHOTOBOOTH_LIMIT_PER_DAY = -1
+// - Để GIỚI HẠN THEO NGÀY (ví dụ 1, 3, 5 lượt): đặt PHOTOBOOTH_LIMIT_PER_DAY = 5
+var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI SỐ LƯỢT CHỤP!
+// =========================================================================
+
+// =========================================================================
 
 // locketmphong.js - Bộ script toàn diện Locket Gold VIP & AI Filter Engine
 
@@ -738,19 +747,23 @@
 
                 entries["feature_gates"] = JSON.stringify(fg);
 
-                // Mở khóa Photo Booth không giới hạn (BỎ CHẶN 1 LẦN/NGÀY)
+                // Mở khóa Photo Booth có thể tùy biến số lượt bởi Chủ Sở Hữu
+                const isUnlimited = (PHOTOBOOTH_LIMIT_PER_DAY === -1 || PHOTOBOOTH_LIMIT_PER_DAY >= 9999);
+                const dailyLimitVal = isUnlimited ? -1 : PHOTOBOOTH_LIMIT_PER_DAY;
+                const freeUsesVal = isUnlimited ? "999999" : String(PHOTOBOOTH_LIMIT_PER_DAY);
+
                 entries["photo_booth_enabled"] = "true";
                 entries["photobooth_enabled"] = "true";
-                entries["photo_booth_unlimited"] = "true";
-                entries["photobooth_unlimited"] = "true";
-                entries["photo_booth_daily_limit"] = "-1";
-                entries["photobooth_daily_limit"] = "-1";
-                entries["photo_booth_max_uses_per_day"] = "-1";
-                entries["photobooth_max_uses_per_day"] = "-1";
-                entries["photo_booth_free_uses_per_day"] = "999999";
-                entries["photobooth_free_uses_per_day"] = "999999";
-                entries["photo_booth_daily_limit_enabled"] = "false";
-                entries["photobooth_daily_limit_enabled"] = "false";
+                entries["photo_booth_unlimited"] = isUnlimited ? "true" : "false";
+                entries["photobooth_unlimited"] = isUnlimited ? "true" : "false";
+                entries["photo_booth_daily_limit"] = String(dailyLimitVal);
+                entries["photobooth_daily_limit"] = String(dailyLimitVal);
+                entries["photo_booth_max_uses_per_day"] = String(dailyLimitVal);
+                entries["photobooth_max_uses_per_day"] = String(dailyLimitVal);
+                entries["photo_booth_free_uses_per_day"] = freeUsesVal;
+                entries["photobooth_free_uses_per_day"] = freeUsesVal;
+                entries["photo_booth_daily_limit_enabled"] = isUnlimited ? "false" : "true";
+                entries["photobooth_daily_limit_enabled"] = isUnlimited ? "false" : "true";
                 entries["photo_booth_paywall_enabled"] = "false";
                 entries["photobooth_paywall_enabled"] = "false";
                 entries["show_paywall_on_photo_booth_select"] = "false";
@@ -761,11 +774,11 @@
                 entries["photo_booth_cooldown_seconds"] = "0";
                 entries["photo_booth_gold_only"] = "false";
                 entries["photobooth_gold_only"] = "false";
-                entries["photo_booth_gold_mode"] = "unlimited";
-                entries["photobooth_gold_mode"] = "unlimited";
+                entries["photo_booth_gold_mode"] = isUnlimited ? "unlimited" : "capped";
+                entries["photobooth_gold_mode"] = isUnlimited ? "unlimited" : "capped";
                 entries["photo_booth"] = JSON.stringify({
                     "enabled": true,
-                    "unlimited": true,
+                    "unlimited": isUnlimited,
                     "max_duration_s": 30,
                     "maxDuration": 30,
                     "capture_interval_ms": 1500,
@@ -774,9 +787,9 @@
                     "counts_down": true,
                     "shareable": true,
                     "save_to_camera_roll": true,
-                    "daily_limit": -1,
-                    "max_uses_per_day": -1,
-                    "free_tier": false,
+                    "daily_limit": dailyLimitVal,
+                    "max_uses_per_day": dailyLimitVal,
+                    "free_tier": !isUnlimited,
                     "cooldown_hours": 0
                 });
                 entries["photo_booth_config"] = JSON.stringify({
@@ -789,12 +802,12 @@
                     "interval_ms": 1500,
                     "max_duration_ms": 30000,
                     "countdown_s": 3,
-                    "unlimited": true,
-                    "max_uses_per_day": -1,
-                    "daily_limit": -1,
+                    "unlimited": isUnlimited,
+                    "max_uses_per_day": dailyLimitVal,
+                    "daily_limit": dailyLimitVal,
                     "cooldown_hours": 0,
-                    "unlimited_for_gold": true,
-                    "free_tier_enabled": false
+                    "unlimited_for_gold": isUnlimited,
+                    "free_tier_enabled": !isUnlimited
                 });
                 entries["photobooth_config"] = entries["photo_booth_config"];
                 entries["photos_booth_config"] = "true";
