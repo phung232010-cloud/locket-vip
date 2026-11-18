@@ -555,59 +555,34 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
 
 
-                obj.subscriber.entitlements = {
-
-                    "Gold": goldEntitlement,
-
-                    "gold": goldEntitlement,
-
-                    "locket_gold": goldEntitlement,
-
-                    "locket_gold_annual": goldEntitlement,
-
-                    "premium": goldEntitlement,
-
-                    "Premium": goldEntitlement,
-
-                    "pro": goldEntitlement,
-
-                    "Pro": goldEntitlement,
-
-                    "camera_filters": goldEntitlement,
-
-                    "camera_filter": goldEntitlement,
-
-                    "filters": goldEntitlement,
-
-                    "filter": goldEntitlement,
-
-                    "ai_filters": goldEntitlement,
-
-                    "ai_filter": goldEntitlement,
-
-                    "photobooth": goldEntitlement,
-
-                    "vip": goldEntitlement
-
-                };
+                const allEntitlementKeys = [
+                    "Gold", "gold", "locket_gold", "locket_gold_annual", "premium", "Premium",
+                    "pro", "Pro", "vip", "VIP", "plus", "plus_gold", "mega", "unlimited", "unlimited_gold",
+                    "holiday_effects", "holiday_filters", "holiday_effect", "holidays",
+                    "photo_booth", "photos_booth", "photobooth", "photobooth_v2",
+                    "camera_filters", "camera_filter", "filters", "filters_v2", "filter",
+                    "ai_filters", "ai_filter", "camera_effects", "camera_effects_v2",
+                    "ar_filters", "face_filters", "lenses", "boomerang", "burst",
+                    "moment_views", "locket_views", "time_travel_rewind", "calendar_delete_moment",
+                    "camera_roll", "live_photos", "widget_customization", "no_ads",
+                    "all_features", "full_access", "locket_plus", "locket_premium"
+                ];
+                obj.subscriber.entitlements = {};
+                for (const k of allEntitlementKeys) {
+                    obj.subscriber.entitlements[k] = goldEntitlement;
+                }
 
 
 
-                obj.subscriber.subscriptions = {
-
-                    "locket_3600_1y": goldSub,
-
-                    "locket_gold_annual": goldSub,
-
-                    "com.locket.gold.annual": goldSub,
-
-                    "com.locket.gold.yearly": goldSub,
-
-                    "locket_gold_yearly": goldSub,
-
-                    "locket_gold_monthly": goldSub
-
-                };
+                const allProductIds = [
+                    "locket_1600_1y", "locket_3600_1y", "locket_plus_1y", "locket_premium_1y",
+                    "locket_unlimited_1y", "locket_gold_annual", "com.locket.gold.annual",
+                    "com.locket.gold.yearly", "locket_gold_yearly", "locket_gold_monthly"
+                ];
+                obj.subscriber.subscriptions = {};
+                for (const pid of allProductIds) {
+                    obj.subscriber.subscriptions[pid] = Object.assign({}, goldSub, { "product_identifier": pid, "display_name": pid });
+                }
 
 
 
