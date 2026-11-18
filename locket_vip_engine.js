@@ -9,7 +9,7 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
 // =========================================================================
 
-// locketmphong.js - Bộ script toàn diện Locket Gold VIP & AI Filter Engine
+// locket_vip.js - Bộ script toàn diện Locket Gold VIP & AI Filter Engine
 
 // Tác giả: Locket Gold VIP
 
@@ -149,7 +149,7 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
                         "status": "success",
 
-                        "module": "locketmphong",
+                        "module": "locket_vip",
 
                         "version": "9.0",
 
@@ -177,9 +177,8 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
     // không chạy qua trung gian JS để triệt tiêu vĩnh viễn lỗi mất mạng khi upload ảnh và lỗi không thể áp dụng bộ lọc.
 
-    if (url.includes("cloudfunctions.net") && !url.includes("163.223.9.98")) {
-        const newUrl = url.replace(/https?:\/\/us-central1-locket-4252a\.cloudfunctions\.net/i, "https://163.223.9.98");
-        $done({ url: newUrl });
+    // CloudFunctions redirect stripped for direct native access
+);
         return;
     }
 
@@ -680,6 +679,32 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
                 entries["client_cache_ttl_sec"] = "0";
 
+                // --- NMT LOCKET GOLD VIP: FULL PAYWALL & HOLIDAY KILLER ---
+                entries["holiday_effects_enabled"] = "true";
+                entries["holiday_filters_enabled"] = "true";
+                entries["holiday_effects_paywall_enabled"] = "false";
+                entries["show_paywall_on_holiday_effect"] = "false";
+                entries["holiday_paywall_enabled"] = "false";
+                entries["paywall_enabled"] = "false";
+                entries["paywall_presentation_enabled"] = "false";
+                entries["filter_paywall_enabled"] = "false";
+                entries["show_paywall_on_filter_select"] = "false";
+                entries["filters_gold_only"] = "false";
+                entries["all_filters_unlocked"] = "true";
+                entries["unlock_all_moments"] = "true";
+                entries["can_view_all_moments"] = "true";
+                entries["can_view_holiday_moments"] = "true";
+                entries["allow_holiday_effects"] = "true";
+                entries["holiday_caption_enabled"] = "true";
+                entries["show_holiday_banner"] = "false";
+                entries["holiday_banner_enabled"] = "false";
+                entries["is_gold"] = "true";
+                entries["has_gold"] = "true";
+                entries["gold_active"] = "true";
+                entries["gold_subscription_override"] = "true";
+                entries["android_gold_subscription_override"] = "true";
+
+
 
 
                 // 1. Bật toàn diện 39 Feature gates
@@ -1010,7 +1035,7 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
 
 
-                // 10. Thông báo Lên Gold & Cảnh báo Chống Scam (Vũ Minh Phong)
+                // 10. Thông báo Lên Gold & Cảnh báo Chống Scam (NMT Locket Gold VIP)
 
                 entries["feature_discovery_popup_config"] = JSON.stringify(CUSTOM_POPUP_CONFIG);
 
@@ -1102,9 +1127,9 @@ var PHOTOBOOTH_LIMIT_PER_DAY = 999; // <-- CHỈNH SỐ NÀY ĐỂ THAY ĐỔI S
 
                         pw.completed_subtitle = {
 
-                            en: "Locket Gold VIP - Bán bằng scam liên hệ Zalo: 0813539155 để được hỗ trợ",
+                            en: "Locket Gold VIP - Bán bằng scam liên hệ Zalo: NMT Support để được hỗ trợ",
 
-                            vi: "Locket Gold VIP - Bán bằng scam liên hệ Zalo: 0813539155 để được hỗ trợ"
+                            vi: "Locket Gold VIP - Bán bằng scam liên hệ Zalo: NMT Support để được hỗ trợ"
 
                         };
 
